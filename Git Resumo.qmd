@@ -1,0 +1,224 @@
+---
+title: "Resumo das funções Git"
+author: "Paulo Manoel da Silva Junior"
+lang: pt
+format: 
+  html:
+    theme: materia
+    toc: true
+    toc-title: Sumário
+    toc-depth: 4
+    toc-location: right
+    code-copy: true
+    number-sections: false
+    code-tools: false
+    code-block-bg: true
+    smooth-scroll: true
+    code-fold: true
+    code-block-border-left: "#31BAE9"
+    number-depth: 3
+    html-math-method: mathjax
+self-contained: true
+page-layout: full
+editor: source
+---
+
+# Resumo das funções utilizadas em Git 
+
+`git init:` Inicia um repositório git no diretório atual.
+
+`git status: ` Status atual do repositório.
+
+`git add:` "Trackear" os arquivos. **Observação: git add .** adiciona todos os arquivos. 
+
+`git commit -m` "Mensagem de Commit".
+
+`git commit -a -m:` "Mensagem de Commit", **não** precisa fazer o *git add*.
+
+:::{.callout-note}
+## Nota
+
+Arquivos que não terão versões controladas, devem ser adicionados ao arquivo **-gitignore**, o qual esse arquivo também pode ser ignorado. De maneira que o nome do arquivo deve ser: *"arquivo.gitignore"*.
+:::
+
+`git diff:` Mudança nos arquivos no **Working directory**, que não dá pra ver na *staging Area.*
+
+`git diff --staged:` Ver as mudanças nos arquivos na staged Area.
+
+`git log:` Mostra todos os commits **Observação:** Note que existe uma ordem, sendo do mais recente ao mais antigo.
+
+`git log -p:` Mostra todos os commits com as mudanças.
+
+`git log -p -2:` Mostra os últimos 2 commits. 
+
+:::{.callout-tip}
+## Gitk
+
+Interface com os relatórios. Poderá ser instalada novos programas de visualização
+
+:::
+
+`git log --pretty=oneline:` Mostra apenas as chaves. 
+
+`git commit --amond -m "Nova mensagem":` Altera o commit anterior. Poderia antes fazer o *"git add ."* para colocar novas funcionalidades para acrescentar no commit anterior realizado por engano. **Note que a chave do commit é alterada.**
+
+`git reset HEAD arquivo.c:` Remove um arquivo da staging área. 
+
+`git checkout -- arquivo.c:` Recupera o arquivo.c da forma do commit anterior. Ou seja, reverte ao padrão do último commit. 
+
+`git rm arquivo.c:` Remove um arquivo
+
+:::{.callout-important}
+
+## Observação
+
+Usar tags ajuda a reverter o status do sistema à uma data e hora associada à tag
+
+:::
+
+`git tag:` Lista as tags criadas. **Nota: Tags são ponteiros para o sistema.**
+
+`git tag -a V1.0 -m "versão 1.0":` Onde, "versão 1.0" é a mensagem, V1.0 é o nome da tag e *-a* cria uma tag anotada, com interação do usuário, data e hora, etc. 
+
+`git tag -a V0.0 chave -m "versão 0.0":` Mudando ou adicionando uma tag a commits anteriores. 
+
+`git show v0.0:` Saber detalhes a respeito de uma tag. **Onde v0.0 é o nome da tag**
+
+`git checkout v0.0:` Volta o sistema ao status da tag v0.0.
+
+`git checkout master:` Volta para o último commit, onde **master** é o branch padrão. 
+
+`git tag -l v0.0:` remove a tag v0.0.
+
+`git branch teste:` Criando um branch de nome "teste".
+
+`git checkout teste:` Mudando para o brach de nome teste. 
+
+`git checkout -b teste:` Cria o branche de nome "teste" e faz a troca de ambiente. 
+
+`git merge teste:` Estando no branch master, estou trazendo e mesclando os arquivos do branch teste. 
+
+`git branch -d teste:` Removendo o branch de nome teste. 
+
+:::{.callout-important}
+
+## Importante
+
+Alterações na mesma linha em branch distintos irá gerar conflitos. Na hora de fazer o merge, ocorrerá um problema (o merge **não** será feito!). Daí, deverá ir nos arquivos com conflitos e escolher o que vai ficar. No arquivo terá opções comentadas. Delete o que não quiser considerar. 
+
+:::
+
+`git init --base:` Cria o versionamento permitindo o compartilhamento em rede local. Se for **no servidor** (fazer no servidor!)
+
+`git clone diretório do servidor (todo o caminho) novo:` Nome do projeto chave nome na máquina do próprio local. 
+
+`git remote:` Diz o nome do servidor. Note que isso é possível, uma vez que estamos trabalhando em um clone. (Projeto clonado do servidor remoto). O padrão é "origin". 
+
+`git push origin master:` Enviando os arquivos para o servidor origin que estão no branch master. 
+
+`git pull origin master:` Pega as atualizações do servidor que por ventura foram feitas depois do clone e coloca no branch master. Se fizer o clone, irei perder as mudanças que fiz no clone localmente! O pull faz um merge, mas pode não ser legal. O melhor, seria fazer a atualização para um branch diferente do master. Para isso, fazer: git fetch .ring teste, que é um branch de nome "teste" na máquina local. 
+
+`ssh -keygen:` Gerando uma chave de acesso para permitir que a máquina local venha interagir com o Github. 
+
+`git reset HEAD ~1 --hard:` Desfazendo o último commit e as alterações nos arquivos. 
+
+`git reset HEAD ~1 --soft:` Desfazendo o último commit. As alterações nos arquivos não serão perdidas.
+
+:::{.callout-note}
+
+## Sobre os últimos comandos
+
+**~2 faz o mesmo para o penúltimo commit, assim por diante: ~3, ~4, ....**
+
+:::
+
+
+`git push --delete origin tagname:` Remove a uma tag remotamente
+
+:::{.callout-note}
+
+## Observação
+
+No git hub fazer um **fork** é fazer um clone de projeto que queremos elaborar. Esse clone é feito no ambiente remoto do github. Depois, para se ter na máquina local, basta clonar com git clone. 
+
+Com os arquivos na máquina, basta fazer as alterações e ao finalizar, enviamos ao fork do projeto em nossa conta. Depois, no github, devemos ir em *"New pull request"* e clicar para enviar ao autor original do projeto. 
+:::
+
+`git log --reflog:` Lista todos os commits realizados no projeto mesmo estando em um commit anterior acessado através do comando *git checkout "chave"*. Tal comando serve para obter as chaves dos commits mais recentes ao que estamos. 
+
+`git log --pretty = fuller:` Mostra mais detalhes no commit como, por exemplo, data, nome do commit e autor do commit 
+
+:::{.callout-note}
+
+## Nota 
+
+Ao criar um novo branch, basta mudar para ele utilizando git checkout. Para levar esse novo branch ao GitHub faça: git push origin "nome do novo branch". 
+
+Já para deletar o branch bo GitHub, faça: git push --delete origin "nome do branch"
+
+Para acrescentar mudança em um branch no GitHub basta trabalhar normalmente no diretório do computador (diretório do projeto) e fazer um commit. Depois basta fazer:
+
+- git push origin "nome do branch"
+
+Mesmo que o branch já exista, o comando acima enviará o diretório "commitado" com as novas mudanças. 
+
+**Clonando um projeto e indo para uma tag específica de um branch específico**
+
+git clone <diretório>
+
+git checkout <tag name>
+
+ou git checkout <tag name> -b <branch name>
+
+:::
+
+`git branch -a:` Lista todos os branchs
+
+`git clone <url> -b <branch name>:` Iniciando em um branch específico
+
+`git tag -l:` Lista todas as tags de um projeto
+
+`git log -p -2:` Exibe o histórico com diff das duas últimas alterações. 
+
+`git remote -v:` Exibe os repositórios remotos 
+
+`git remote add origin git@github.com: prdm0/repo:` Vincula um repositório local com um repositório remoto. O repositório remoto deverá ter sido criado no GitHub. 
+
+`git pull:` Atualiza o branch atual
+
+`git fetch:` Busca pelas alterações, mas não aplica no branch atual. 
+
+`git push origin nometag:` Criando uma tag no repositório remoto 
+
+`git push origin --tags:` Criando todas tags locais no repositório
+
+`git help comando:` Acessa o documento tags de um comando
+
+`git config --list:` Lista as configurações do git
+
+:::{.callout-important}
+
+## Observação
+
+O HEAD é um ponteiro **especial** que indica o branch atual. Por padrão, HEAD aponta para o branch principal *(o master)*. 
+:::
+
+Atualizando o master de um fork 
+
+- 1. Git remote add opstream "link do projeto oficial" (lembrando que o link vai sem aspas)
+- 2. git fetch opstream
+- 3. git merge opstream/master master 
+
+Suponha que tenhamos atualizado o master de um projeto que é um fork de um projeto oficial. Depois nos arrependemos das mudanças e desejamos voltar o "master" para o estado oficial, isto é, desejamos resetar nossas alterações. Para isso, faça: 
+
+- 1. git remote add opstream "link do master oficial" (lembrando que é sem aspas)
+- 2. git fetch opstream 
+- 3. git checkout master 
+- 4. git reset --hard opstream/master 
+- 5. git push origin master --force 
+
+**Dica:** Toda vez que for propor um pull request, para evitar poluição de commit, em cada nova proposta, crie um novo branch com as mudanças e ao fim, faça um pull request desse branch para o branch master de um projeto oficial. 
+
+Em uma nova proposta, se já houver uma merge dessa proposta antiga, comece um novo branch a criação das novas funcionalidades. 
+
+
